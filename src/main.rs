@@ -14,16 +14,15 @@ fn main() {
         }
     "#;
 
-    match tokenize(string) {
-        Ok(x) => {
-            x.iter().for_each(|token| {
-                println!("{:?}", token.token)
-            });
-        }
-        Err(x) => {
-            println!("ERROR: {}", x.get_message())
-        }
-    }
+    let token_output = tokenize(string);
 
+    let Ok(tokens) = token_output else {
+        println!("ERROR: {}", token_output.err().unwrap().get_message());
+        return;
+    };
+
+    tokens.iter().for_each(|token| {
+        println!("{:?}", token.token)
+    });
 }
 
